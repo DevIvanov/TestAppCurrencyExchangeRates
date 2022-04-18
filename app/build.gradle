@@ -1,6 +1,10 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -29,10 +33,55 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
+    def nav_component = "2.3.5"
+    def lifecycle_components = "2.3.1"
+    def coroutines_lifecycle = '2.2.0'
+
+    implementation project(":data")
+    implementation project(":domain")
+
+    // Navigation Component
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_component"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_component"
+
+    // ViewModelScope
+    api 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-alpha02'
+
+    // Coroutine Lifecycle Scope
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$coroutines_lifecycle"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$coroutines_lifecycle"
+
+    // Lifecycle Components
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_components"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-common-java8:$lifecycle_components"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_components"
+
+    // Gson
+    implementation 'com.google.code.gson:gson:2.8.9'
+
+    // Retrofit2 + GSON
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    // Dagger Hilt
+    implementation "com.google.dagger:hilt-android:$dagger_hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$dagger_hilt_version"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
+    kapt "androidx.hilt:hilt-compiler:1.0.0"
+
+    // Coroutines
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+
+    // Default
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
