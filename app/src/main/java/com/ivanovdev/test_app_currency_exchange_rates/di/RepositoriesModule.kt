@@ -18,5 +18,5 @@ object RepositoriesModule {
         RatesRepositoryImpl(remoteDataSource)
 
     @Provides
-    fun provideRates(repository: RatesRepository): RatesUseCase = RatesUseCase(repository)
+    fun provideRatesUseCase(repository: RatesRepository): RatesUseCase = RatesUseCase(repository)
 }

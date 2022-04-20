@@ -37,8 +37,13 @@ dependencies {
 
     implementation project(":domain")
 
+    // Room
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    androidTestImplementation "androidx.room:room-testing:$room_version"
+
     // Gson
-    implementation 'com.google.code.gson:gson:2.8.9'
+    implementation "com.google.code.gson:gson:$gson_version"
 
     // Retrofit2 + GSON
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"

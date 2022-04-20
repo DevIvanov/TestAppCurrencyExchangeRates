@@ -1,12 +1,5 @@
 <resources>
 
-    <!-- Common strings -->
-
-    <string name="app_name">Currency Exchange Rates</string>
-    <string name="close_caps">CLOSE</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
-
     <!-- Errors -->
 
     <string name="generic_error">Something went wrong. Please try later.</string>
@@ -19,6 +12,19 @@
 
     <string name="emptyField_error">This field must not be empty.</string>
 
+
+    <!-- Common strings -->
+
+    <string name="app_name">Currency Exchange Rates</string>
+    <string name="close_caps">CLOSE</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="popular">Popular</string>
+    <string name="favorite">Favorite</string>
+    <string name="retry">Retry</string>
+    <string name="default_currency">EUR</string>
+    <string name="no_results">No results</string>
+    <string name="currencies">Currencies</string>
     <string name="title_sort_dialog">Sort by</string>
 
     <string-array name="sort_array">

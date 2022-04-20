@@ -6,10 +6,24 @@ import kotlinx.coroutines.flow.StateFlow
 
 class MainViewModel: ViewModel() {
 
-    private val _itemSortDialog = MutableStateFlow(0)
-    val itemSortDialog: StateFlow<Int> get() = _itemSortDialog
+    private val _popularSortType = MutableStateFlow(0)
+    val popularSortType: StateFlow<Int> get() = _popularSortType
 
-    fun setItemSortDialog(index: Int) {
-        _itemSortDialog.value = index
+    fun setPopularSortType(index: Int) {
+        _popularSortType.value = index
+    }
+
+    private val _favoriteSortType = MutableStateFlow(0)
+    val favoriteSortType: StateFlow<Int> get() = _favoriteSortType
+
+    fun setFavoriteSortType(index: Int) {
+        _favoriteSortType.value = index
+    }
+
+    private val _fragmentIndex = MutableStateFlow(0)
+    val fragmentIndex: StateFlow<Int> get() = _fragmentIndex
+
+    fun setFragmentIndex(index: Int) {
+        _fragmentIndex.value = index
     }
 }

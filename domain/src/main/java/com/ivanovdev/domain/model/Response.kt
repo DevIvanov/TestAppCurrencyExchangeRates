@@ -9,7 +9,13 @@ data class Response (
 ){
     fun mapToList(): List<Currency> {
         val list = mutableListOf<Currency>()
-        for(i in rates) { list.add(Currency(name = i.key, value = i.value)) }
+        for(i in rates) { list.add(Currency(id = i.key, value = i.value)) }
+        return list
+    }
+
+    fun mapToUpdateList(): List<UpdateCurrency> {
+        val list = mutableListOf<UpdateCurrency>()
+        for(i in rates) { list.add(UpdateCurrency(id = i.key, value = i.value)) }
         return list
     }
 }

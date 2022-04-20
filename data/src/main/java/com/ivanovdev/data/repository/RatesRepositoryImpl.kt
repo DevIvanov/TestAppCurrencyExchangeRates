@@ -10,7 +10,7 @@ class RatesRepositoryImpl @Inject constructor(
     private val dataSource: RemoteDataSource
 ): RatesRepository {
 
-    override suspend fun getPopularRates(): Result<Response> {
-        return dataSource.getPopularRates()
+    override suspend fun getPopularRates(baseCurrency: String): Result<Response> {
+        return dataSource.getPopularRates(baseCurrency)
     }
 }

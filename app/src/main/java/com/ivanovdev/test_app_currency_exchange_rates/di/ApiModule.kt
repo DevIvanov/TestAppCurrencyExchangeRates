@@ -1,7 +1,7 @@
 package com.ivanovdev.test_app_currency_exchange_rates.di
 
-import com.ivanovdev.data.repository.RemoteConstants.BASE_URL
-import com.ivanovdev.data.source.remote.ExchangeRatesApi
+import com.ivanovdev.data.constants.RemoteConstants.BASE_URL
+import com.ivanovdev.data.source.remote.api.ExchangeRatesApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

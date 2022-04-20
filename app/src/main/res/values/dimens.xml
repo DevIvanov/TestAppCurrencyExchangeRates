@@ -3,13 +3,6 @@
 
     <!-- Common -->
 
-    <dimen name="common_border_offset">@dimen/common_offset_horizontal_m</dimen>
-    <dimen name="common_elevation">0dp</dimen>
-    <dimen name="common_radius">12dp</dimen>
-    <dimen name="common_button_radius">8dp</dimen>
-    <dimen name="common_button_textSize">@dimen/common_textSize_m</dimen>
-    <dimen name="common_button_height">@dimen/common_offset_vertical_4xl</dimen>
-
     <dimen name="common_offset_horizontal_xxs">4dp</dimen>
     <dimen name="common_offset_horizontal_xs">8dp</dimen>
     <dimen name="common_offset_horizontal_s">12dp</dimen>
@@ -44,5 +37,6 @@
     <!-- Other -->
 
     <dimen name="loader_progressBar_diameter">42dp</dimen>
+    <dimen name="bottom_nav_height">56dp</dimen>
 
 </resources>

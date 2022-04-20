@@ -1,4 +1,4 @@
-package com.ivanovdev.data.repository
+package com.ivanovdev.data.constants
 
 import com.ivanovdev.data.BuildConfig
 

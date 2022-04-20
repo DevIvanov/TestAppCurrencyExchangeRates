@@ -8,7 +8,7 @@ import javax.inject.Inject
 class RatesUseCase @Inject constructor(
     private val repository: RatesRepository
 ) {
-    suspend fun getPopularRates(): Result<Response> {
-        return repository.getPopularRates()
+    suspend fun getPopularRates(baseCurrency: String): Result<Response> {
+        return repository.getPopularRates(baseCurrency)
     }
 }

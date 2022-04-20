@@ -18,19 +18,22 @@ class PopularAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val itemPersonBinding = RecyclerViewItemPopularBinding.inflate(layoutInflater, parent, false)
+        val itemPersonBinding = RecyclerViewItemPopularBinding.inflate(
+            layoutInflater, parent, false)
         return ItemViewHolder(itemPersonBinding)
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(getItem(position), position)
+        holder.bind(getItem(position))
     }
 
-    inner class ItemViewHolder(private val binding: RecyclerViewItemPopularBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ItemViewHolder(
+        private val binding: RecyclerViewItemPopularBinding
+        ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Currency, position: Int) = with(itemView) {
-            binding.tvName.text = item.name
-            val value = BigDecimal(item.value).setScale(3, RoundingMode.HALF_EVEN)
+        fun bind(item: Currency) = with(itemView) {
+            binding.tvName.text = item.id
+            val value = BigDecimal(item.value).setScale(5, RoundingMode.HALF_EVEN)
             binding.tvValue.text = value.toString()
             binding.imgFavorite.setImageResource(if (item.isFavorite)
                 R.drawable.ic_star_choosen
@@ -44,8 +47,10 @@ class PopularAdapter(
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Currency>() {
-        override fun areItemsTheSame(oldItem: Currency, newItem: Currency): Boolean = oldItem.name== newItem.name
-        override fun areContentsTheSame(oldItem: Currency, newItem: Currency): Boolean = oldItem == newItem
+        override fun areItemsTheSame(oldItem: Currency, newItem: Currency):
+                Boolean = oldItem == newItem
+        override fun areContentsTheSame(oldItem: Currency, newItem: Currency):
+                Boolean = oldItem.id == newItem.id
     }
 
     interface OnFavoriteClickListener {

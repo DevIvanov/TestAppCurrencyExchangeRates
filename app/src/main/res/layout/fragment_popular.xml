@@ -16,12 +16,12 @@
         app:layout_constraintTop_toTopOf="parent" >
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Popular"
-            android:textColor="@color/greyLight"
-            android:textSize="@dimen/common_textSize_l"
+            android:text="@string/popular"
+            android:textColor="@color/white"
+            android:textSize="@dimen/common_textSize_xl"
             android:textStyle="bold"/>
 
         <ImageView
@@ -31,38 +31,53 @@
             android:src="@drawable/ic_sort"
             android:layout_gravity="right"
             android:layout_marginEnd="@dimen/common_offset_horizontal_s"
-            app:tint="@color/greyLight" />
+            app:tint="@color/white" />
 
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnChooseCurrency"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_offset_horizontal_m"
-        android:text="EUR"
+        android:layout_margin="@dimen/common_offset_horizontal_s"
+        android:background="@drawable/background_button"
+        android:textColor="@color/white"
+        android:textSize="@dimen/common_textSize_l"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/toolbar"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/common_offset_horizontal_m"
-        android:text="Search"
-        app:layout_constraintBottom_toBottomOf="@+id/btnChooseCurrency"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnChooseCurrency" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvPopular"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="@dimen/common_offset_horizontal_s"
+        android:layout_marginBottom="@dimen/bottom_nav_height"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChooseCurrency"
-        tools:listitem="@layout/recycler_view_item_popular" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChooseCurrency">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPopular"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/common_offset_horizontal_s"
+            android:layout_marginBottom="@dimen/bottom_nav_height"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/recycler_view_item_popular" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <TextView
+        android:id="@+id/tvNoResults"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_results"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
