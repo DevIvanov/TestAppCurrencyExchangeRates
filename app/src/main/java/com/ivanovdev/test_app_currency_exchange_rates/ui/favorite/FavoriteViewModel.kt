@@ -21,8 +21,8 @@ class FavoriteViewModel @Inject constructor(
     private val _favoriteList = MutableStateFlow<List<Currency>>(listOf())
     val favoriteList: StateFlow<List<Currency>> get() = _favoriteList
 
-    fun setFavoriteList(list: List<Currency>) {
-        _favoriteList.value = list
+    fun setFavoriteList(list: List<Currency>, index: Int) {
+        _favoriteList.value = sortListFirstTime(list, index)
     }
 
     fun deleteItem(item: Currency) {
@@ -43,6 +43,16 @@ class FavoriteViewModel @Inject constructor(
             2 -> _favoriteList.value.sortedBy { it.value }
             3 -> _favoriteList.value.sortedBy { it.value }.reversed()
             else -> {_favoriteList.value}
+        }
+    }
+
+    private fun sortListFirstTime (list: List<Currency>, index: Int): List<Currency> {
+        return when (index) {
+            0 -> list.sortedBy { it.id }
+            1 -> list.sortedBy { it.id }.reversed()
+            2 -> list.sortedBy { it.value }
+            3 -> list.sortedBy { it.value }.reversed()
+            else -> {list}
         }
     }
 }

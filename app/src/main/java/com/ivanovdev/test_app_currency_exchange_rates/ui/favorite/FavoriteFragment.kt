@@ -1,5 +1,6 @@
 package com.ivanovdev.test_app_currency_exchange_rates.ui.favorite
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import com.ivanovdev.test_app_currency_exchange_rates.ui.favorite.adapter.Favori
 import com.ivanovdev.test_app_currency_exchange_rates.ui.main.MainViewModel
 import com.ivanovdev.test_app_currency_exchange_rates.util.PreferenceHelper
 import com.ivanovdev.test_app_currency_exchange_rates.util.PreferenceHelper.sortTypeFavorite
+import com.ivanovdev.test_app_currency_exchange_rates.util.PreferenceHelper.sortTypePopular
 import com.ivanovdev.test_app_currency_exchange_rates.util.flow.collectWhileStarted
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +33,8 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite),
     private val adapter by lazy { FavoriteAdapter(this) }
     private val prefs by lazy { PreferenceHelper.customPreference(
         requireContext(), PreferenceHelper.CUSTOM_PREF_NAME) }
+    private val currentList = mutableListOf<Currency>()
+    private var currentPosition = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +52,7 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite),
 
     private fun setupAdapter() {
         binding.rvFavorite.adapter = adapter
+        adapter.submitList(currentList)
 
         val dividerItemDecoration = DividerItemDecoration(
             binding.rvFavorite.context, DividerItemDecoration.VERTICAL
@@ -65,18 +70,24 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite),
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun observeViewModel() {
         super.observeViewModel()
 
         viewModel.currencyList.collectWhileStarted(viewLifecycleOwner) { list ->
             val favoriteList = list.filter { it.isFavorite }
-            viewModel.setFavoriteList(favoriteList)
-            viewModel.sortList(prefs.sortTypeFavorite)
-            Log.i(TAG, "Favorite list = $favoriteList")
+            viewModel.setFavoriteList(favoriteList, prefs.sortTypeFavorite)
         }
 
         viewModel.favoriteList.collectWhileStarted(viewLifecycleOwner) { favoriteList ->
-            adapter.submitList(favoriteList)
+            currentList.clear()
+            currentList.addAll(favoriteList)
+            adapter.notifyDataSetChanged()
+
+            binding.rvFavorite.layoutManager?.scrollToPosition(currentPosition)
+            currentPosition = 0
+
+            Log.i(TAG, "Favorite list = $favoriteList")
 
             if (favoriteList.isNullOrEmpty()){
                 binding.tvNoResults.visibility = View.VISIBLE
@@ -90,8 +101,9 @@ class FavoriteFragment : BaseFragment(R.layout.fragment_favorite),
         }
     }
 
-    override fun onDeleteClick(item: Currency) {
+    override fun onDeleteClick(item: Currency, position: Int) {
         viewModel.deleteItem(item)
+        currentPosition = position
     }
 
     companion object {

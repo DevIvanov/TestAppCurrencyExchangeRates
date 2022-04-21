@@ -24,14 +24,14 @@ class PopularAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class ItemViewHolder(
         private val binding: RecyclerViewItemPopularBinding
         ) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Currency) = with(itemView) {
+        fun bind(item: Currency, position: Int) = with(itemView) {
             binding.tvName.text = item.id
             val value = BigDecimal(item.value).setScale(5, RoundingMode.HALF_EVEN)
             binding.tvValue.text = value.toString()
@@ -41,7 +41,7 @@ class PopularAdapter(
                 R.drawable.ic_star)
 
             binding.imgFavorite.setOnClickListener {
-                listener.onFavoriteClick(item)
+                listener.onFavoriteClick(item, position)
             }
         }
     }
@@ -54,6 +54,6 @@ class PopularAdapter(
     }
 
     interface OnFavoriteClickListener {
-        fun onFavoriteClick(item: Currency)
+        fun onFavoriteClick(item: Currency, position: Int)
     }
 }

@@ -1,5 +1,6 @@
 package com.ivanovdev.test_app_currency_exchange_rates.ui.popular
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -33,6 +34,8 @@ class PopularFragment : BaseFragment(R.layout.fragment_popular),
     private val adapter by lazy { PopularAdapter(this) }
     private val prefs by lazy { PreferenceHelper.customPreference(
             requireContext(), PreferenceHelper.CUSTOM_PREF_NAME) }
+    private val currentList = mutableListOf<Currency>()
+    private var currentPosition = 0
 
 
     override fun onCreateView(
@@ -54,6 +57,7 @@ class PopularFragment : BaseFragment(R.layout.fragment_popular),
 
     private fun setupAdapter() {
         binding.rvPopular.adapter = adapter
+        adapter.submitList(currentList)
 
         val dividerItemDecoration = DividerItemDecoration(
             binding.rvPopular.context, DividerItemDecoration.VERTICAL
@@ -90,6 +94,7 @@ class PopularFragment : BaseFragment(R.layout.fragment_popular),
         binding.btnChooseCurrency.text = prefs.currency
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun observeViewModel() {
         super.observeViewModel()
 
@@ -107,7 +112,13 @@ class PopularFragment : BaseFragment(R.layout.fragment_popular),
                 binding.tvNoResults.visibility = View.VISIBLE
             }else{
                 binding.tvNoResults.visibility = View.INVISIBLE
-                adapter.submitList(popularList)
+
+                currentList.clear()
+                currentList.addAll(popularList)
+                adapter.notifyDataSetChanged()
+
+                binding.rvPopular.layoutManager?.scrollToPosition(currentPosition)
+                currentPosition = 0
             }
             Log.i(TAG, "Popular list = $popularList")
         }
@@ -121,8 +132,9 @@ class PopularFragment : BaseFragment(R.layout.fragment_popular),
         }
     }
 
-    override fun onFavoriteClick(item: Currency) {
+    override fun onFavoriteClick(item: Currency, position: Int) {
         viewModel.updateItemFromDB(item)
+        currentPosition = position
     }
 
     companion object{

@@ -22,18 +22,18 @@ class FavoriteAdapter(
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class ItemViewHolder(private val binding: RecyclerViewItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bind(item: Currency) = with(itemView) {
+        fun bind(item: Currency, position: Int) = with(itemView) {
             binding.tvName.text = item.id
             val value = BigDecimal(item.value).setScale(5, RoundingMode.HALF_EVEN)
             binding.tvValue.text = value.toString()
 
             binding.imgRemove.setOnClickListener {
-                listener.onDeleteClick(item)
+                listener.onDeleteClick(item, position)
             }
         }
     }
@@ -44,6 +44,6 @@ class FavoriteAdapter(
     }
 
     interface OnDeleteClickListener {
-        fun onDeleteClick(item: Currency)
+        fun onDeleteClick(item: Currency, position: Int)
     }
 }
